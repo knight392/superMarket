@@ -2,7 +2,7 @@
   <div class="tab-bar-item" @click='itemClick'>
     <div v-if="!isActive"><slot name="item-img"></slot></div>
     <div v-else><slot name="item-img-active"></slot></div>
-    <div :style = 'activeStyle' :class="{active: isActive}"><slot name="item-text"></slot></div>
+    <div :class="{active: isActive}"><slot name="item-text"></slot></div>
   </div>
 </template>
 
@@ -31,7 +31,7 @@ export default {
 };
 </script>
 
-<style scope>
+<style scoped>
 .tab-bar-item {
   flex: 1;
   height: 49px;

@@ -5,7 +5,7 @@
 </template>
 
 
-<style scope>
+<style scoped>
 .tab-bar{
     display: flex;
     position: fixed;
