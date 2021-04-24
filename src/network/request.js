@@ -1,5 +1,6 @@
 import axios from 'axios'
 export function request(config) {
+  // 每连接一个服务器就使用一个实例
     const instance1 = axios.create({
         baseURL: 'http://152.136.185.210:7878/api/m5',
         timeout: 5000
