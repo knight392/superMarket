@@ -2,7 +2,7 @@
   <swiper>
     <swiper-item v-for="(item,index) in banner" :key="index">
       <a :href="item.link">
-        <img :src="item.image" alt=""/>
+        <img :src="item.image" alt="" @load="imgLoad"/>
       </a>
     </swiper-item>
   </swiper>
@@ -15,7 +15,11 @@
       Swiper,
       SwiperItem
     },
-   
+    data() {
+      return {
+        flag: true
+      }
+    },
     props: {
       banner: {
         type: Array,
@@ -23,8 +27,16 @@
           return []
         }
       }
+    },
+    methods: {
+      imgLoad() {
+        // 只发一次事件请求
+        if(this.flag) {
+          this.$emit('swiperImgLoad')
+          this.flag = false
+        }
+      }
     }
-
   }
 </script>
  
