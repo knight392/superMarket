@@ -13,7 +13,7 @@ export default {};
   position: fixed;
   right: 10px;
   bottom: 60px;
-  z-index: 9;
+  z-index: 99;
   transition-property: all;
   transition-duration: 100;
 }

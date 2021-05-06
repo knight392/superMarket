@@ -34,8 +34,7 @@ import TabControl from "components/content/tabControl/TabControl";
 import Scroll from "components/common/scroll/Scroll";
 import { requestHomeMultiData, requestHomeGoodsData } from "network/home";
 import GoodsList from "components/content/goods/GoodsList";
-import BackTop from 'components/content/backTop/BackTop.vue';
-import {debounce} from 'common/utils'
+import {itemListenerMixin, toTopMixin} from 'common/mixin'
 export default {
   name: 'home',
   components: {
@@ -45,8 +44,7 @@ export default {
     FeatureView,
     TabControl,
     GoodsList,
-    Scroll,
-    BackTop
+    Scroll
   },
   data() {
     return {
@@ -64,9 +62,9 @@ export default {
         sell: { page: 0, list: [] },
       },
       currentType: "pop",
-      isShow: false,
       isFixed: false,
-      tabOffSetTop: 0
+      tabOffSetTop: 0,
+      cueY: 0
     };
   },
   computed: {
@@ -74,6 +72,7 @@ export default {
       return this.goods[this.currentType].list;
     },
   },
+  mixins: [itemListenerMixin, toTopMixin],
   // vue实例创建的时候调用钩子函数，发送异步请求
   created() {
     // 轮播图及其下方的推荐链接数据
@@ -82,9 +81,14 @@ export default {
     this.getHomeGoodsData("new");
     this.getHomeGoodsData("sell");
   },
+  activated() {
+    this.$refs.wrapper.scrollTo(0, this.cueY, 100);
+  },
+  deactivated() {
+    this.cueY = this.$refs.wrapper.getCueY();
+  },
   mounted() {
-    // 商品图片加载完后重新refresh设置better-scroll 的高度
-    this.$bus.$on('itemImgLoad',debounce(this.$refs.wrapper.refresh))
+   
   },
   methods: {
     changeGoodsList(index) {
@@ -102,9 +106,6 @@ export default {
       // 两个样式保存一致
       this.$refs.tabControl1.currentIndex = index;
       this.$refs.tabControl2.currentIndex = index;
-    },
-    topClick() {
-      this.$refs.wrapper.scrollTo(0, 0, 600);
     },
     // 是否显示返回顶部按钮
     contentScroll(position) {

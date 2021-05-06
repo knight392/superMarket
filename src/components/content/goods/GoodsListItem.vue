@@ -1,5 +1,5 @@
 <template>
-  <div class="good-item">
+  <div class="good-item" @click="goodsClick">
     <img :src="showImage" key="showImage" alt="" @load="imgLoad"/>
     <div class="info">
       <p class="title">{{ goodsItem.title }}</p>
@@ -11,6 +11,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      path: `/goodsDetail/${this.goodsItem.iid}`
+    }
+  },
   props: {
     goodsItem: {
       type: Object,
@@ -21,12 +26,18 @@ export default {
   },
   computed: {
     showImage() {
-      return this.goodsItem.show.img;
-    },
+      // 商品详情与home的list的image不一样
+      return this.goodsItem.image || this.goodsItem.show.img;
+    }
   },
   methods: {
     imgLoad() {
+      // 事件总线，告诉使用者图片加载完
       this.$bus.$emit('itemImgLoad');
+    },
+    // 路由导航到物品详情页
+    goodsClick() {
+      this.$router.push(this.path)
     }
   }
 };
