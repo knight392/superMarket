@@ -25,7 +25,7 @@
       <detail-comments-info ref="comments" :info="commentsInfo" />
       <goods-list ref="recommends" :goods="recommend" />
     </scroll>
-    <detail-bottom-bar class="bottom-bar" />
+    <detail-bottom-bar class="bottom-bar" @addCart="addToCart" />
     <back-top @click.native="topClick" v-show="isShow" />
   </div>
 </template>
@@ -49,6 +49,7 @@ import GoodsList from "components/content/goods/GoodsList";
 import { itemListenerMixin, toTopMixin } from "common/mixin";
 import { debounce } from "common/utils";
 import DetailBottomBar from "./childCopms/DetailBottomBar";
+import{ADDTOCART} from '../../store/actions-type'
 
 export default {
   data() {
@@ -100,6 +101,16 @@ export default {
           this.cueIndex = i;
         }
       }
+    },
+    // 添加到购物车
+    addToCart() {
+      this.$store.dispatch(ADDTOCART,  {
+        iid: this.iid,
+        img: this.topImgs[0],
+        title: this.goodsDesc.title,
+        desc: this.imgInfo.desc,
+        price: this.goodsDesc.lowNowPrice
+      })
     },
    
     // 请求数据
@@ -188,7 +199,7 @@ export default {
   top: 44px;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 58px;
   overflow: hidden;
   background-color: #fff;
   z-index: 10;

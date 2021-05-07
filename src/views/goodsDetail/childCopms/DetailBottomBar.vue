@@ -25,6 +25,7 @@
 export default {
   methods: {
     addToCart() {
+      this.$emit('addCart');
       console.log('添加到购物车');
     }
   }
