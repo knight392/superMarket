@@ -10,13 +10,18 @@
     <div v-for="(item, index) in info.detailImage" :key="index">
       <div class="info-key">{{ item.key }}</div>
       <div class="info-list">
-        <img v-for="(srcItem, i) in item.list" :key="i" :src="srcItem" @load="imgLoad" />
+        <img v-for="(srcItem, i) in item.list" :key="i" :src="srcItem" @load="imgLoad" v-lazy="srcItem"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Vue from 'vue';
+import { Lazyload } from 'vant';
+
+Vue.use(Lazyload);
+
 export default {
   props: {
     info: {

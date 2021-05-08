@@ -1,6 +1,6 @@
 <template>
   <div class="good-item" @click="goodsClick">
-    <img :src="showImage" key="showImage" alt="" @load="imgLoad"/>
+    <img :src="showImage" key="showImage" alt="" @load="imgLoad" v-lazy="showImage"/>
     <div class="info">
       <p class="title">{{ goodsItem.title }}</p>
       <span class="price">{{ goodsItem.price }}</span>
@@ -10,6 +10,11 @@
 </template>
 
 <script>
+import Vue from 'vue';
+import { Lazyload } from 'vant';
+
+Vue.use(Lazyload);
+
 export default {
   data() {
     return {

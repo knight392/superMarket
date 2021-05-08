@@ -49,7 +49,10 @@ import GoodsList from "components/content/goods/GoodsList";
 import { itemListenerMixin, toTopMixin } from "common/mixin";
 import { debounce } from "common/utils";
 import DetailBottomBar from "./childCopms/DetailBottomBar";
-import{ADDTOCART} from '../../store/actions-type'
+import{ADDTOCART} from '../../store/actions-type';
+import {Toast} from 'vant';
+import Vue from 'vue';
+Vue.use(Toast);
 
 export default {
   data() {
@@ -110,6 +113,10 @@ export default {
         title: this.goodsDesc.title,
         desc: this.imgInfo.desc,
         price: this.goodsDesc.lowNowPrice
+      }).then(() =>{
+        console.log("添加商品成功")
+        Toast.success('添加商品成功');
+        Toast("啊啊啊")
       })
     },
    
